@@ -9,6 +9,8 @@
 #define _UTILS_H
 
 #include <stdint.h>
+#include <cstdio>
+#include "platform.h"
 
 #define EXT2_DEFAULT_PREALLOC_BLOCK 8
 
@@ -152,7 +154,7 @@ typedef struct tagEXT2_SUPER_BLOCK {
     uint8_t     s_prealloc_dir_blocks;
     uint16_t    s_padding1;
     uint32_t    s_reserved[204];
-} __atttibute__ ((__packed__)) EXT2_SUPER_BLOCK;
+}PACKED  EXT2_SUPER_BLOCK;
 
 /* The Group Descriptions follow the Superblock */
 typedef struct tagEXT2_GROUP_DESC {
@@ -164,7 +166,7 @@ typedef struct tagEXT2_GROUP_DESC {
     uint16_t    bg_used_dirs_count;
     uint16_t    bg_pad;
     uint32_t    bg_reserved[3];
-} __atttibute__ ((__packed__)) EXT2_GROUP_DESC;
+} PACKED EXT2_GROUP_DESC;
 
 /* Structure of inode on the disk */
 typedef struct tagEXT2_INODE {
@@ -226,7 +228,7 @@ typedef struct tagEXT2_INODE {
             uint32_t    m_i_reserved2[2];
         } masix2;
     } osd2;
-} __atttibute__ ((__packed__)) EXT2_INODE;
+} PACKED EXT2_INODE;
 
 /* EXT2 dir Structure */
 typedef struct tagEXT2_DIR_ENTRY {
@@ -235,21 +237,21 @@ typedef struct tagEXT2_DIR_ENTRY {
     uint8_t     name_len;
     uint8_t     filetype;
     char        name[EXT2_NAME_LEN];
-} __atttibute__ ((__packed__)) EXT2_DIR_ENTRY;
+} PACKED EXT2_DIR_ENTRY;
 
 typedef struct ext4_extent {
     uint32_t    ee_block;
     uint16_t    ee_len;
     uint16_t    ee_start_hi;
     uint32_t    ee_start_lo;
-} __atttibute__  ((__packed__)) EXT4_EXTENT;
+} PACKED EXT4_EXTENT;
 
 typedef struct ext4_extent_idx {
     uint32_t    ei_block;
     uint32_t    ei_leaf_lo;
     uint16_t    ei_leaf_hi;
     uint16_t    ei_unused;
-} __atttibute__ ((__packed__)) EXT4_EXTENT_IDX;
+} PACKED EXT4_EXTENT_IDX;
 
 typedef struct ext4_extent_header {
     uint16_t    eh_magic;
@@ -257,7 +259,7 @@ typedef struct ext4_extent_header {
     uint16_t    eh_max;
     uint16_t    eh_depth;
     uint32_t    eh_generation;
-} __atttibute__ ((__packed__)) EXT4_EXTENT_HEADER;
+} PACKED EXT4_EXTENT_HEADER;
 
 #define EXT4_EXT_MAGIC  0xf30a
 #define get_ext4_header(i)      ((struct ext4_extent_header*)(i)->i_block)
@@ -272,7 +274,7 @@ typedef struct ext4_extent_header {
 
 #define INODE_HAS_EXTENT(i)     ((i)->i_flags & EXT2_EXTENTS_FL)
 
-static inline uint64_t idx_to_block(EXT4_EXTENT_IDX *idx) {
+static INLINE uint64_t idx_to_block(EXT4_EXTENT_IDX *idx) {
     uint64_t block;
 
     block = (uint64_t)idx->ei_leaf_lo;
@@ -317,12 +319,12 @@ static inline uint64_t idx_to_block(EXT4_EXTENT_IDX *idx) {
 #define EXT2_S_IXGRP        0x0008
 /* Other */
 #define EXT2_S_IROTH        0x0004
-#define EXT2_s_IWOTH        0x0002
+#define EXT2_S_IWOTH        0x0002
 #define EXT2_S_IXOTH        0x0001
 
 #define IS_BUFFER_END(p, q, bsize)      (((char*)(p)) >= ((char*)(q) + bsize))
 
-static inline const char* get_type_string(int type) {
+static INLINE const char* get_type_string(int type) {
     switch(type) {
         case 0x1:   return "Regular File";
         case 0x2:   return "Directory";
@@ -335,7 +337,7 @@ static inline const char* get_type_string(int type) {
     return "Unknown Type";
 }
 
-static inline char* get_access(unsigned long mode) {
+static INLINE char* get_access(unsigned long mode) {
     static char acc[10];
 
     acc[0] = (mode & EXT2_S_IRUSR) ? 'r' : '-';

@@ -10,4 +10,11 @@
 
 using namespace std;
 
+int main(int argc, char** argv) {
+
+    string path = argv[1]; 
+    cout << "path: " << path << endl;
+
+}
+
 

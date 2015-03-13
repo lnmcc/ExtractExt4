@@ -8,8 +8,9 @@
 #ifndef _EXT2FS_H
 #define _EXT2FS_H
 
+#include <string>
+#include <list>
 #include "utils.h"
-#include "string"
 
 using namespace std;
 
@@ -93,7 +94,7 @@ public:
 
 class Ext2Read {
 private:
-    int ndiskl
+    int ndisk;
     list<Ext2Partition *> nparts;
     int scan_ebr(FileHandle, lloff_t, int, int);
     int scan_partitions(char* path, int);
@@ -117,6 +118,6 @@ public:
     void add_partition(Ext2Partition *part) {
         nparts.push_back(part);
     }
-}
+};
 
 #endif

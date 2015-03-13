@@ -5,9 +5,12 @@
 	> Created Time: Fri 13 Mar 2015 11:57:22 AM CST
  ************************************************************************/
 
-#include<iostream>
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
 #include "utils.h"
 #include "ext2fs.h"
+#include "platform.h"
 
 using namespace std;
 
@@ -69,7 +72,7 @@ int Ext2Partition::ext2_readblock(lloff_t blocknum, void* buffer) {
 
     ret = read_disk(handle, buffer, sectno, nsects, sect_size);
 
-    return ret
+    return ret;
 }
 
 int Ext2Partition::mount() {
