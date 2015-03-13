@@ -355,6 +355,6 @@ static inline char* get_access(unsigned long mode) {
     return acc;
 }
 
-#define LOG(file, line, msg) printf("%s:%d : %s", file, line, smg);
+#define LOG(fmt, msg) printf("%s:%d", __FILE__, __LINE__); printf(fmt, msg); printf("\n");
 
 #endif
